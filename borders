@@ -15,7 +15,7 @@ function borders_path()
 	if (isset($_SERVER['HOME'])) {
 		return $_SERVER['HOME'] . '/.borders';
 	} else {
-		return $_SERVER['HOMEDRIVE'] . $_SERVER['HOMEPATH'] . DIRECTORY_SEPARATOR . '.borders'
+		return $_SERVER['HOMEDRIVE'] . $_SERVER['HOMEPATH'] . DIRECTORY_SEPARATOR . '.borders';
 	}
 }
 
