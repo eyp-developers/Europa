@@ -1,0 +1,28 @@
+---
+ip: "192.168.30.10"
+memory: 1024
+cpus: 1
+provider: virtualbox
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+folders:
+    - map: ~/eypdev
+      to: /home/vagrant/eyp
+
+sites:
+    - map: alumni.dev
+      to: /home/vagrant/eyp/alumni-platform/public
+    - map: eyptb.dev
+      to: /home/vagrant/eyp/eyptb
+
+databases:
+    - alumni
+    - borders
+
+variables:
+    - key: APP_ENV
+      value: local

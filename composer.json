@@ -1,0 +1,23 @@
+{
+    "name": "eyp-developers/borders",
+    "description": "The development environment for EYP Developers",
+    "authors": [
+        {
+            "name": "Leo Sjöberg",
+            "email": "leo.sjoberg@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "symfony/console": "~2.0",
+        "symfony/process": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "EypDevelopers\\Borders": "src/"
+        }
+    },
+    "bin": [
+        "borders"
+    ]
+}

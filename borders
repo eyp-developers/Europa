@@ -1,0 +1,37 @@
+#!/usr/bin/env php
+<?php
+
+$_ENV['HOME'] = getenv('HOME');
+$_ENV['VAGRANT_DOTFILE_PATH'] = borders_path() . DIRECTORY_SEPARATOR . '.vagrant';
+
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+	require __DIR__ . '/vendor/autoload.php';
+} else {
+	require __DIR__ . '/../../autoload.php';
+}
+
+function borders_path()
+{
+	if (isset($_SERVER['HOME'])) {
+		return $_SERVER['HOME'] . '/.borders';
+	} else {
+		return $_SERVER['HOMEDRIVE'] . $_SERVER['HOMEPATH'] . DIRECTORY_SEPARATOR . '.borders'
+	}
+}
+
+$app = new \Symfony\Component\Console\Application('EYP Developers Borders', '1.0.0');
+
+$app->add(new \EypDevelopers\Borders\DestroyCommand());
+$app->add(new \EypDevelopers\Borders\EditCommand());
+$app->add(new \EypDevelopers\Borders\HaltCommand());
+$app->add(new \EypDevelopers\Borders\InitCommand());
+$app->add(new \EypDevelopers\Borders\ProvisionCommand());
+$app->add(new \EypDevelopers\Borders\ResumeCommand());
+$app->add(new \EypDevelopers\Borders\RunCommand());
+$app->add(new \EypDevelopers\Borders\SshCommand());
+$app->add(new \EypDevelopers\Borders\StatusCommand());
+$app->add(new \EypDevelopers\Borders\SuspendCommand());
+$app->add(new \EypDevelopers\Borders\UpCommand());
+$app->add(new \EypDevelopers\Borders\UpdateCommand());
+
+$app->run();

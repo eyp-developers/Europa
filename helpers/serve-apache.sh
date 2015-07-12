@@ -39,15 +39,15 @@ exit 1
 #
 function create_vhost {
 cat <<- _EOF_
-<VirtualHost *:80>
+<VirtualHost *:$3>
     ServerAdmin webmaster@localhost
-    ServerName $ServerName
-    $ServerAlias
+    ServerName $1
+    $serverAlias
 
-    DocumentRoot $DocumentRoot
+    DocumentRoot $2
 
 
-    <Directory $DocumentRoot>
+    <Directory $2>
         Options -Indexes +FollowSymLinks +MultiViews
         AllowOverride All
         Require all granted
@@ -74,12 +74,12 @@ _EOF_
 
 function create_ssl_vhost {
 cat <<- _EOF_
-<VirtualHost *:443>
+<VirtualHost *:$4>
     ServerAdmin webmaster@localhost
-    ServerName $ServerName
-    $ServerAlias
+    ServerName $1
+    $serverAlias
 
-    DocumentRoot $DocumentRoot
+    DocumentRoot $2
 
     <Directory $DocumentRoot>
         Options -Indexes +FollowSymLinks +MultiViews
@@ -162,19 +162,19 @@ fi
 
 # If CertName doesn't get set, set it to ServerName
 if [ "$CertName" == "" ]; then
-    CertName=$ServerName
+    CertName=$1
 fi
 
 if [ ! -d $DocumentRoot ]; then
-    mkdir -p $DocumentRoot
+    mkdir -p $2
     #chown USER:USER $DocumentRoot #POSSIBLE IMPLEMENTATION, new flag -u ?
 fi
 
-if [ -f "$DocumentRoot/$ServerName.conf" ]; then
+if [ -f "$2/$1.conf" ]; then
     echo 'vHost already exists. Aborting'
     show_usage
 else
-    create_vhost > /etc/apache2/sites-available/${ServerName}.conf
+    create_vhost > /etc/apache2/sites-available/${1}.conf
 
     # Add :443 handling
     if [ "$CertPath" != "" ]; then
@@ -182,6 +182,6 @@ else
     fi
 
     # Enable Site
-    cd /etc/apache2/sites-available/ && a2ensite ${ServerName}.conf
+    cd /etc/apache2/sites-available/ && a2ensite ${1}.conf
     service apache2 reload
 fi
