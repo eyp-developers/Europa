@@ -31,7 +31,6 @@ class InitCommand extends Command
         mkdir(borders_path());
 
         copy(__DIR__ . '/stubs/Borders.yaml', borders_path() . '/Borders.yaml');
-        copy(__DIR__ . '/stubs/after.sh', borders_path() . '/after.sh');
 
         $output->writeln('<comment>Creating Borders.yaml file...</comment> <info>✔</info>');
         $output->writeln('<comment>Borders.yaml file created at:</comment> '.borders_path().'/Borders.yaml');
