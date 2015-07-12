@@ -21,12 +21,6 @@ else
     public_folder="$2"
 fi
 
-if [[ -z $4 ]]; then
-    github_url="https://raw.githubusercontent.com/fideloper/Vaprobash/master"
-else
-    github_url="$4"
-fi
-
 # Add repo for latest FULL stable Apache
 # (Required to remove conflicts with PHP PPA due to partial Apache upgrade within it)
 sudo add-apt-repository -y ppa:ondrej/apache2
@@ -51,7 +45,7 @@ sudo usermod -a -G www-data vagrant
 sudo a2dismod mpm_prefork
 sudo a2dismod php5 
 sudo a2enmod mpm_worker rewrite actions ssl
-curl --silent -L $github_url/helpers/vhost.sh > vhost
+curl --silent -L ../helpers/vhost.sh > vhost
 sudo chmod guo+x vhost
 sudo mv vhost /usr/local/bin
 

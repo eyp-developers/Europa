@@ -26,6 +26,9 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again p
 # -qq implies -y --force-yes
 sudo apt-get install -qq $mysql_package
 
+# Change the root user to 'borders'
+MYSQL=`which mysql`
+
 # Make MySQL connectable from outside world without SSH tunnel
 if [ $3 == "true" ]; then
     # enable remote access
@@ -34,7 +37,6 @@ if [ $3 == "true" ]; then
 
     # adding grant privileges to mysql root user from everywhere
     # thx to http://stackoverflow.com/questions/7528967/how-to-grant-mysql-privileges-in-a-bash-script for this
-    MYSQL=`which mysql`
 
     Q1="GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '$1' WITH GRANT OPTION;"
     Q2="FLUSH PRIVILEGES;"
@@ -43,4 +45,13 @@ if [ $3 == "true" ]; then
     $MYSQL -uroot -p$1 -e "$SQL"
 
     service mysql restart
+
 fi
+
+Q1="update user set user='borders' where user='root';"
+Q2="FLUSH PRIVILEGES;"
+SQL="${Q1}${Q2}"
+
+$MYSQL -uroot -p$1 -e "$SQL"
+
+service mysql restart

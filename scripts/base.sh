@@ -1,20 +1,14 @@
 #!/usr/bin/env bash
 
-echo "Setting Timezone & Locale to $3 & C.UTF-8"
+echo "Setting Timezone & Locale to $2 & C.UTF-8"
 
-sudo ln -sf /usr/share/zoneinfo/$3 /etc/localtime
+sudo ln -sf /usr/share/zoneinfo/$2 /etc/localtime
 sudo locale-gen C.UTF-8
 export LANG=C.UTF-8
 
 echo "export LANG=C.UTF-8" >> /home/vagrant/.bashrc
 
 echo ">>> Installing Base Packages"
-
-if [[ -z $1 ]]; then
-    github_url="https://raw.githubusercontent.com/fideloper/Vaprobash/master"
-else
-    github_url="$1"
-fi
 
 # Update
 sudo apt-get update
@@ -24,7 +18,7 @@ sudo apt-get update
 sudo apt-get install -qq curl unzip git-core ack-grep software-properties-common build-essential
 
 # Git Config and set Owner
-curl --silent -L $github_url/helpers/gitconfig > /home/vagrant/.gitconfig
+curl --silent -L ../helpers/gitconfig > /home/vagrant/.gitconfig
 sudo chown vagrant:vagrant /home/vagrant/.gitconfig
 
 # Common fixes for git
@@ -61,12 +55,12 @@ sudo openssl x509 -req -days 365 -in "$SSL_DIR/xip.io.csr" -signkey "$SSL_DIR/xi
 # Disable case sensitivity
 shopt -s nocasematch
 
-if [[ ! -z $2 && ! $2 =~ false && $2 =~ ^[0-9]*$ ]]; then
+if [[ ! -z $1 && ! $1 =~ false && $1 =~ ^[0-9]*$ ]]; then
 
-    echo ">>> Setting up Swap ($2 MB)"
+    echo ">>> Setting up Swap ($1 MB)"
 
     # Create the Swap file
-    fallocate -l $2M /swapfile
+    fallocate -l $1M /swapfile
 
     # Set the correct Swap permissions
     chmod 600 /swapfile
