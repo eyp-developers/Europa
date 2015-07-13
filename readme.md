@@ -23,7 +23,7 @@ Before getting to setup, make sure `~/.composer/vendor/bin` is in your `PATH`. T
 Getting yourself up and running with the Europa development box is super easy, it's just a few commands away.
 
 First, install the Europa repository globally by calling  
-    composer global require eyp-developers/europa ~1.0
+    composer global require eyp-developers/europa ~0.9
 
 When this is done, the europa commands should be available to you. Now, to get your provisioning settings ready, call    
     europa init
