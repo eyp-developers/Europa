@@ -15,7 +15,8 @@ mv composer.phar /usr/local/bin/composer
 
 If the `mv` command fails, run it with sudo.
 
-Before getting to setup, make sure `~/.composer/vendor/bin` is in your `PATH`. This can be done by calling  
+Before getting to setup, make sure `~/.composer/vendor/bin` is in your `PATH`. This can be done by calling
+
     PATH=$PATH:~/.composer/vendor/bin
 
 ## Setup
