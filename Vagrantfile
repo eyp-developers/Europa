@@ -4,7 +4,7 @@
 require 'json'
 require 'yaml'
 
-github_url = "../Borders"
+github_url = "../Europa"
 
 # Server Configuration
 
@@ -12,9 +12,9 @@ hostname        = "eyp.dev"
 public_folder   = "/vagrant"
 
 VAGRANTFILE_API_VERSION = "2"
-confDir = $confDir ||= File.expand_path("~/.borders")
+confDir = $confDir ||= File.expand_path("~/.europa")
 
-bordersYamlPath = confDir + "/Borders.yaml"
+europaYamlPath = confDir + "/Europa.yaml"
 aliasesPath = confDir + "/aliases"
 
 require File.expand_path(File.dirname(__FILE__) + '/scripts/europa.rb')
@@ -24,7 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		config.vm.provision "file", source: aliasesPath, destination: "~/.bash_aliases"
 	end
 
-	Borders.configure(config, YAML::load(File.read(bordersYamlPath)))
+	Europa.configure(config, YAML::load(File.read(europaYamlPath)))
 end
 
 # ruby_version          = "latest" # Choose what ruby version should be installed (will also be the default version)

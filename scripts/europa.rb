@@ -6,7 +6,7 @@ class Europa
     # Configure Local Variable To Access Scripts From Remote Location
     scriptDir = File.dirname(__FILE__)
 
-    github_url = "../europa"
+    github_url = "../Europa"
 
 # Server Configuration
 
@@ -48,7 +48,7 @@ class Europa
     ########
 
     # Provision Base Packages
-    server_swap = settings["swap"] ||= '1024M'
+    server_swap = settings["swap"] ||= 1024
     server_timezone = settings["timezone"] ||= 'UTC'
     config.vm.provision "shell", path: "scripts/base.sh", args: [server_swap, server_timezone]
 
@@ -70,7 +70,7 @@ class Europa
 
     server_ip = settings["ip"] ||= "192.168.10.10"
 
-    if settings['nginx']
+    if (settings['nginx'] == 'true')
       # Provision Nginx Base
       config.vm.provision "shell", path: "scripts/nginx.sh", args: [server_ip, public_folder, hostname]
     else
