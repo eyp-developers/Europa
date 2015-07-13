@@ -39,15 +39,15 @@ exit 1
 #
 function create_vhost {
 cat <<- _EOF_
-<VirtualHost *:$3>
+<VirtualHost *:${3}>
     ServerAdmin webmaster@localhost
-    ServerName $1
+    ServerName ${1}
     $serverAlias
 
-    DocumentRoot $2
+    DocumentRoot ${2}
 
 
-    <Directory $2>
+    <Directory ${2}>
         Options -Indexes +FollowSymLinks +MultiViews
         AllowOverride All
         Require all granted
@@ -74,12 +74,12 @@ _EOF_
 
 function create_ssl_vhost {
 cat <<- _EOF_
-<VirtualHost *:$4>
+<VirtualHost *:${4}>
     ServerAdmin webmaster@localhost
-    ServerName $1
+    ServerName ${1}
     $serverAlias
 
-    DocumentRoot $2
+    DocumentRoot ${2}
 
     <Directory $DocumentRoot>
         Options -Indexes +FollowSymLinks +MultiViews
@@ -170,7 +170,7 @@ if [ ! -d $DocumentRoot ]; then
     #chown USER:USER $DocumentRoot #POSSIBLE IMPLEMENTATION, new flag -u ?
 fi
 
-if [ -f "$2/$1.conf" ]; then
+if [ -f "${2}/${1}.conf" ]; then
     echo 'vHost already exists. Aborting'
     show_usage
 else
