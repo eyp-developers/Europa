@@ -10,7 +10,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
 	require __DIR__ . '/../../autoload.php';
 }
 
-function borders_path()
+function europa_path()
 {
 	if (isset($_SERVER['HOME'])) {
 		return $_SERVER['HOME'] . '/.europa';
