@@ -6,7 +6,7 @@
  * Time: 22:24
  */
 
-namespace EypDevelopers\Borders;
+namespace EypDevelopers\Europa;
 
 
 use Symfony\Component\Console\Command\Command;
@@ -19,7 +19,7 @@ class ProvisionCommand extends Command
     protected function configure()
     {
         $this->setName('employ')
-        ->setDescription('Re-provision the Borders machine');
+        ->setDescription('Re-provision the Europa machine');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

@@ -6,7 +6,7 @@
  * Time: 22:24
  */
 
-namespace EypDevelopers\Borders;
+namespace EypDevelopers\Europa;
 
 
 use Symfony\Component\Console\Command\Command;
@@ -21,7 +21,7 @@ class RunCommand extends Command
     {
         $this
             ->setName('run')
-            ->setDescription('Run commands through the Borders machine via SSH')
+            ->setDescription('Run commands through the Europa machine via SSH')
             ->addArgument('ssh-command', InputArgument::REQUIRED, 'The command to pass through to the virtual machine.');
     }
     /**

@@ -6,7 +6,7 @@
  * Time: 22:24
  */
 
-namespace EypDevelopers\Borders;
+namespace EypDevelopers\Europa;
 
 
 use Symfony\Component\Console\Command\Command;
@@ -18,8 +18,8 @@ class ResumeCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('wakeup')
-        ->setDescription('Resume the suspended Borders machine');
+        $this->setName('resume')
+        ->setDescription('Resume the suspended Europa machine');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

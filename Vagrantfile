@@ -4,6 +4,13 @@
 require 'json'
 require 'yaml'
 
+github_url = "../Borders"
+
+# Server Configuration
+
+hostname        = "eyp.dev"
+public_folder   = "/vagrant"
+
 VAGRANTFILE_API_VERSION = "2"
 confDir = $confDir ||= File.expand_path("~/.borders")
 
@@ -20,11 +27,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	Borders.configure(config, YAML::load(File.read(bordersYamlPath)))
 end
 
-# github_url = "../Borders"
-
-# Server Configuration
-
-# hostname        = "eyp.dev"
 
 # Set a local private network IP address.
 # See http://en.wikipedia.org/wiki/Private_network for explanation
@@ -41,7 +43,7 @@ end
 # EST        for Eastern Standard Time
 # US/Central for American Central
 # US/Eastern for American Eastern
-server_timezone  = "UTC"
+# server_timezone  = "UTC"
 
 # Database Configuration
 # mysql_root_password   = "secret"   # We'll assume user "root"
@@ -51,51 +53,51 @@ server_timezone  = "UTC"
 # mongo_enable_remote   = "false"  # remote access enabled when true
 
 # Languages and Packages
-php_timezone          = "UTC"    # http://php.net/manual/en/timezones.php
-php_version           = "5.6"    # Options: 5.5 | 5.6
-ruby_version          = "latest" # Choose what ruby version should be installed (will also be the default version)
-ruby_gems             = [        # List any Ruby Gems that you want to install
+# php_timezone          = "UTC"    # http://php.net/manual/en/timezones.php
+# php_version           = "5.6"    # Options: 5.5 | 5.6
+# ruby_version          = "latest" # Choose what ruby version should be installed (will also be the default version)
+# ruby_gems             = [        # List any Ruby Gems that you want to install
   #"jekyll",
-  "sass",
-  "compass",
-]
+#  "sass",
+#  "compass",
+# ]
 
 # To install HHVM instead of PHP, set this to "true"
 # hhvm                  = "false"
 
 # PHP Options
-composer_packages     = [        # List any global Composer packages that you want to install
-  "phpunit/phpunit:4.0.*",
+# composer_packages     = [        # List any global Composer packages that you want to install
+#  "phpunit/phpunit:4.0.*",
   #"codeception/codeception=*",
-  "phpspec/phpspec:2.0.*@dev",
+#  "phpspec/phpspec:2.0.*@dev",
   #"squizlabs/php_codesniffer:1.5.*",
-]
+# ]
 
 # Default web server document root
 # Symfony's public directory is assumed "web"
 # Laravel's public directory is assumed "public"
-public_folder         = "/vagrant"
+# public_folder         = "/vagrant"
 
-laravel_root_folder   = "/vagrant/laravel" # Where to install Laravel. Will `composer install` if a composer.json file exists
-laravel_version       = "latest-stable" # If you need a specific version of Laravel, set it here
-symfony_root_folder   = "/vagrant/symfony" # Where to install Symfony.
+# laravel_root_folder   = "/vagrant/laravel" # Where to install Laravel. Will `composer install` if a composer.json file exists
+# laravel_version       = "latest-stable" # If you need a specific version of Laravel, set it here
+# symfony_root_folder   = "/vagrant/symfony" # Where to install Symfony.
 
-nodejs_version        = "latest"   # By default "latest" will equal the latest stable version
-nodejs_packages       = [          # List any global NodeJS packages that you want to install
-  "grunt-cli",
-  "gulp",
-  "bower",
-  #"yo",
-]
+# nodejs_version        = "latest"   # By default "latest" will equal the latest stable version
+# nodejs_packages       = [          # List any global NodeJS packages that you want to install
+#  "grunt-cli",
+#  "gulp",
+#  "bower",
+ #"yo",
+# ]
 
 # RabbitMQ settings
-rabbitmq_user = "user"
-rabbitmq_password = "password"
+# rabbitmq_user = "user"
+# rabbitmq_password = "password"
 
-sphinxsearch_version  = "rel22" # rel20, rel21, rel22, beta, daily, stable
+# sphinxsearch_version  = "rel22" # rel20, rel21, rel22, beta, daily, stable
 
 
-Vagrant.configure("2") do |config|
+# Vagrant.configure("2") do |config|
 
   # Set server to Ubuntu 14.04
 #  config.vm.box = "ubuntu/trusty64"
@@ -313,7 +315,7 @@ Vagrant.configure("2") do |config|
   ##########
 
   # Provision Composer
-  config.vm.provision "shell", path: "scripts/composer.sh", privileged: false, args: composer_packages.join(" ")
+  #config.vm.provision "shell", path: "scripts/composer.sh", privileged: false, args: composer_packages.join(" ")
 
   # Provision Laravel
   # config.vm.provision "shell", path: "#{github_url}/scripts/laravel.sh", privileged: false, args: [server_ip, laravel_root_folder, public_folder, laravel_version]
@@ -343,4 +345,4 @@ Vagrant.configure("2") do |config|
   ##########
   # config.vm.provision "shell", path: "./local-script.sh"
 
-end
+# end

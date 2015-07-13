@@ -6,7 +6,7 @@
  * Time: 22:24
  */
 
-namespace EypDevelopers\Borders;
+namespace EypDevelopers\Europa;
 
 
 use Symfony\Component\Console\Input\InputOption;
@@ -19,8 +19,8 @@ class UpCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('start')
-            ->setDescription('Start the Borders machine')
+        $this->setName('up')
+            ->setDescription('Start the Europa machine')
             ->addOption('provision', null, InputOption::VALUE_NONE, 'Run the provisioners on the box.');
     }
     /**

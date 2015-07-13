@@ -6,7 +6,7 @@
  * Time: 22:24
  */
 
-namespace EypDevelopers\Borders;
+namespace EypDevelopers\Europa;
 
 
 use Symfony\Component\Process\Process;
@@ -19,7 +19,7 @@ class StatusCommand extends Command
     protected function configure()
     {
         $this->setName('status')
-        ->setDescription('Get the status of the borders');
+        ->setDescription('Get the status of Europa');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

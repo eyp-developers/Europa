@@ -6,7 +6,7 @@
  * Time: 22:24
  */
 
-namespace EypDevelopers\Borders;
+namespace EypDevelopers\Europa;
 
 
 use Symfony\Component\Console\Command\Command;
@@ -18,7 +18,8 @@ class DestroyCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('remove');
+        $this->setName('destroy')
+        ->setDescription('Destroy Europa');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

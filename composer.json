@@ -1,5 +1,5 @@
 {
-    "name": "eyp-developers/borders",
+    "name": "eyp-developers/europa",
     "description": "The development environment for EYP Developers",
     "authors": [
         {
@@ -14,10 +14,10 @@
     },
     "autoload": {
         "psr-4": {
-            "EypDevelopers\\Borders\\": "src/"
+            "EypDevelopers\\Europa\\": "src/"
         }
     },
     "bin": [
-        "borders"
+        "europa"
     ]
 }

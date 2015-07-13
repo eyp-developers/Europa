@@ -6,7 +6,7 @@
  * Time: 22:24
  */
 
-namespace EypDevelopers\Borders;
+namespace EypDevelopers\Europa;
 
 
 use Symfony\Component\Process\Process;
@@ -18,8 +18,8 @@ class HaltCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('close')
-        ->setDescription('Close all borders');
+        $this->setName('halt')
+        ->setDescription('Halt the Europa machine');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

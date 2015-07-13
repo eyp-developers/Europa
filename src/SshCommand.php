@@ -6,7 +6,7 @@
  * Time: 22:24
  */
 
-namespace EypDevelopers\Borders;
+namespace EypDevelopers\Europa;
 
 
 use Symfony\Component\Console\Command\Command;
@@ -18,8 +18,8 @@ class SshCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('login')
-        ->setDescription('SSH into the Borders machine');
+        $this->setName('ssh')
+        ->setDescription('SSH into the Europa machine');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

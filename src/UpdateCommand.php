@@ -6,7 +6,7 @@
  * Time: 22:24
  */
 
-namespace EypDevelopers\Borders;
+namespace EypDevelopers\Europa;
 
 
 use Symfony\Component\Process\Process;
@@ -19,7 +19,7 @@ class UpdateCommand extends Command
     protected function configure()
     {
         $this->setName('update')
-        ->setDescription('Update the borders (ubuntu/trusty64) box');
+        ->setDescription('Update the europa (ubuntu/trusty64) box');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

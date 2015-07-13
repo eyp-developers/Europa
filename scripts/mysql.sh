@@ -26,7 +26,7 @@ sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again p
 # -qq implies -y --force-yes
 sudo apt-get install -qq $mysql_package
 
-# Change the root user to 'borders'
+# Change the root user to 'europa'
 MYSQL=`which mysql`
 
 # Make MySQL connectable from outside world without SSH tunnel

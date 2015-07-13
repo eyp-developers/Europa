@@ -6,7 +6,7 @@
  * Time: 22:24
  */
 
-namespace EypDevelopers\Borders;
+namespace EypDevelopers\Europa;
 
 
 use Symfony\Component\Console\Command\Command;
@@ -18,8 +18,8 @@ class SuspendCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('siesta')
-        ->setDescription('Suspend the Borders machine');
+        $this->setName('suspend')
+        ->setDescription('Suspend the Europa machine');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)

@@ -1,0 +1,37 @@
+#!/usr/bin/env php
+<?php
+
+$_ENV['HOME'] = getenv('HOME');
+$_ENV['VAGRANT_DOTFILE_PATH'] = europa_path() . DIRECTORY_SEPARATOR . '.vagrant';
+
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+	require __DIR__ . '/vendor/autoload.php';
+} else {
+	require __DIR__ . '/../../autoload.php';
+}
+
+function borders_path()
+{
+	if (isset($_SERVER['HOME'])) {
+		return $_SERVER['HOME'] . '/.europa';
+	} else {
+		return $_SERVER['HOMEDRIVE'] . $_SERVER['HOMEPATH'] . DIRECTORY_SEPARATOR . '.europa';
+	}
+}
+
+$app = new \Symfony\Component\Console\Application('EYP Developers Europa', '1.0.0');
+
+$app->add(new \EypDevelopers\Europa\DestroyCommand());
+$app->add(new \EypDevelopers\Europa\EditCommand());
+$app->add(new \EypDevelopers\Europa\HaltCommand());
+$app->add(new \EypDevelopers\Europa\InitCommand());
+$app->add(new \EypDevelopers\Europa\ProvisionCommand());
+$app->add(new \EypDevelopers\Europa\ResumeCommand());
+$app->add(new \EypDevelopers\Europa\RunCommand());
+$app->add(new \EypDevelopers\Europa\SshCommand());
+$app->add(new \EypDevelopers\Europa\StatusCommand());
+$app->add(new \EypDevelopers\Europa\SuspendCommand());
+$app->add(new \EypDevelopers\Europa\UpCommand());
+$app->add(new \EypDevelopers\Europa\UpdateCommand());
+
+$app->run();

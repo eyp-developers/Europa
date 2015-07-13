@@ -6,7 +6,7 @@
  * Time: 22:24
  */
 
-namespace EypDevelopers\Borders;
+namespace EypDevelopers\Europa;
 
 
 use Symfony\Component\Process\Process;
@@ -18,21 +18,21 @@ class InitCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('setup')
-        ->setDescription('Get your borders setup');
+        $this->setName('init')
+        ->setDescription('Initialise Europa');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        if (is_dir(borders_path())) {
-            throw new \InvalidArgumentException('Borders have already been setup');
+        if (is_dir(europa_path())) {
+            throw new \InvalidArgumentException('Europa has already been setup');
         }
 
-        mkdir(borders_path());
+        mkdir(europa_path());
 
-        copy(__DIR__ . '/stubs/Borders.yaml', borders_path() . '/Borders.yaml');
+        copy(__DIR__ . '/stubs/Europa.yaml', europa_path() . '/Europa.yaml');
 
-        $output->writeln('<comment>Creating Borders.yaml file...</comment> <info>✔</info>');
-        $output->writeln('<comment>Borders.yaml file created at:</comment> '.borders_path().'/Borders.yaml');
+        $output->writeln('<comment>Creating Europa.yaml file...</comment> <info>✔</info>');
+        $output->writeln('<comment>Europa.yaml file created at:</comment> '.europa_path().'/Europa.yaml');
     }
 }

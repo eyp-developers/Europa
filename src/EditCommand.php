@@ -6,7 +6,7 @@
  * Time: 22:24
  */
 
-namespace EypDevelopers\Borders;
+namespace EypDevelopers\Europa;
 
 
 use Symfony\Component\Process\Process;
@@ -18,13 +18,13 @@ class EditCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('configure')
-        ->setDescription('Edit the borders.yaml file');
+        $this->setName('edit')
+        ->setDescription('Edit the Europa.yaml file');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $command = $this->executable() . ' ' . borders_path() . '/Borders.yaml';
+        $command = $this->executable() . ' ' . europa_path() . '/Europa.yaml';
 
         $process = new Process($command, realpath(__DIR__ . '/../'), array_merge($_SERVER, $_ENV), null, null);
 

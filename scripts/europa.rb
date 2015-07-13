@@ -1,24 +1,31 @@
-class Borders
-  def Borders.configure(config, settings)
+class Europa
+  def Europa.configure(config, settings)
     # Set The VM Provider
     ENV['VAGRANT_DEFAULT_PROVIDER'] = settings["provider"] ||= "virtualbox"
 
     # Configure Local Variable To Access Scripts From Remote Location
     scriptDir = File.dirname(__FILE__)
 
+    github_url = "../europa"
+
+# Server Configuration
+
+    hostname        = "eyp.dev"
+    public_folder   = "/vagrant"
+
     # Prevent TTY Errors
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
 
     # Configure The Box
     config.vm.box = "ubuntu/trusty64"
-    config.vm.hostname = "borders"
+    config.vm.hostname = "europa"
 
     # Configure A Private Network IP
     config.vm.network :private_network, ip: settings["ip"] ||= "192.168.10.10"
 
     # Configure A Few VirtualBox Settings
     config.vm.provider "virtualbox" do |vb|
-      vb.name = 'borders'
+      vb.name = 'europa'
       vb.customize ["modifyvm", :id, "--memory", settings["memory"] ||= "2048"]
       vb.customize ["modifyvm", :id, "--cpus", settings["cpus"] ||= "1"]
       vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
@@ -29,7 +36,7 @@ class Borders
     # Configure A Few VMware Settings
     ["vmware_fusion", "vmware_workstation"].each do |vmware|
       config.vm.provider vmware do |v|
-        v.vmx["displayName"] = "borders"
+        v.vmx["displayName"] = "europa"
         v.vmx["memsize"] = settings["memory"] ||= 2048
         v.vmx["numvcpus"] = settings["cpus"] ||= 1
         v.vmx["guestOS"] = "ubuntu-64"
@@ -50,7 +57,7 @@ class Borders
 
     # Provision PHP
     php_timezone = server_timezone
-    hhvm = settings["hhvm"] ||= false
+    hhvm = settings["hhvm"] ||= "false"
     php_version = settings["php_version"] ||= "5.6"
     config.vm.provision "shell", path: "scripts/php.sh", args: [php_timezone, hhvm, php_version]
 
@@ -61,9 +68,11 @@ class Borders
     # Web server
     ########
 
+    server_ip = settings["ip"] ||= "192.168.10.10"
+
     if settings['nginx']
       # Provision Nginx Base
-      config.vm.provision "shell", path: "scripts/nginx.sh", args: [server_ip, public_folder, hostname, github_url]
+      config.vm.provision "shell", path: "scripts/nginx.sh", args: [server_ip, public_folder, hostname]
     else
       # Provision Apache Base
       config.vm.provision "shell", path: "scripts/apache.sh", args: [server_ip, public_folder, hostname]
@@ -73,10 +82,10 @@ class Borders
     # MySQL
     ########
 
-    mysql_user = settings["db_user"] ||= 'root'
-    mysql_root_password = settings["db_password"] ||= 'root'
+    mysql_user = settings["db_user"] ||= 'europa'
+    mysql_root_password = settings["db_password"] ||= 'secret'
     mysql_version = '5.6'
-    mysql_enable_remote = true
+    mysql_enable_remote = 'true'
 
     config.vm.provision "shell", path: "scripts/mysql.sh", args: [mysql_user, mysql_root_password, mysql_version, mysql_enable_remote]
 
@@ -185,7 +194,7 @@ class Borders
         end
 
         config.vm.provision "shell" do |s|
-            s.inline = "echo \"\n#Set Borders environment variable\nexport $1=$2\" >> /home/vagrant/.profile"
+            s.inline = "echo \"\n#Set europa environment variable\nexport $1=$2\" >> /home/vagrant/.profile"
             s.args = [var["key"], var["value"]]
         end
       end
