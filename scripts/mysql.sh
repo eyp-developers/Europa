@@ -38,19 +38,21 @@ if [ $4 == "true" ]; then
     # adding grant privileges to mysql root user from everywhere
     # thx to http://stackoverflow.com/questions/7528967/how-to-grant-mysql-privileges-in-a-bash-script for this
 
-    Q1="GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '$1' WITH GRANT OPTION;"
+    Q1="GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '$2' WITH GRANT OPTION;"
     Q2="FLUSH PRIVILEGES;"
     SQL="${Q1}${Q2}"
 
-    $MYSQL -uroot -p$1 -e "$SQL"
+    $MYSQL -uroot -p$2 -e "$SQL"
 
     service mysql restart
 
 fi
 
-Q1="update user set user=$1 where user='root';"
+Q1="update mysql.user set user=$1 where user='root';"
 Q2="FLUSH PRIVILEGES;"
 SQL="${Q1}${Q2}"
+
+echo "executing $SQL with user $1 and password $2"
 
 $MYSQL -uroot -p$2 -e "$SQL"
 

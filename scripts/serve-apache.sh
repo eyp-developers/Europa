@@ -21,7 +21,7 @@ Assumes /etc/apache2/sites-available and /etc/apache2/sites-enabled setup used
           This *ASSUMES* a .crt and a .key file exists
             at file path /provided-file-path/your-server-or-cert-name.[crt|key].
           Otherwise you can except Apache errors when you reload Apache.
-          Ensure Apache's mod_ssl is enabled via "sudo a2enmod ssl".
+          Ensure Apache\'s mod_ssl is enabled via "sudo a2enmod ssl".
     -c    Certificate filename. "xip.io" becomes "xip.io.key" and "xip.io.crt".
 
     Example Usage. Serve files from /var/www/xip.io at http(s)://192.168.33.10.xip.io
@@ -39,15 +39,15 @@ exit 1
 #
 function create_vhost {
 cat <<- _EOF_
-<VirtualHost *:${3}>
+<VirtualHost *:80>
     ServerAdmin webmaster@localhost
-    ServerName ${1}
+    ServerName $serverName
     $serverAlias
 
-    DocumentRoot ${2}
+    DocumentRoot $documentRoot
 
 
-    <Directory ${2}>
+    <Directory $documentRoot>
         Options -Indexes +FollowSymLinks +MultiViews
         AllowOverride All
         Require all granted
@@ -59,13 +59,13 @@ cat <<- _EOF_
         </FilesMatch>
     </Directory>
 
-    ErrorLog \${APACHE_LOG_DIR}/$ServerName-error.log
+    ErrorLog \${APACHE_LOG_DIR}/$serverName-error.log
 
     # Possible values include: debug, info, notice, warn, error, crit,
     # alert, emerg.
     LogLevel warn
 
-    CustomLog \${APACHE_LOG_DIR}/$ServerName-access.log combined
+    CustomLog \${APACHE_LOG_DIR}/$serverName-access.log combined
 
 
 </VirtualHost>
@@ -74,14 +74,14 @@ _EOF_
 
 function create_ssl_vhost {
 cat <<- _EOF_
-<VirtualHost *:${4}>
+<VirtualHost *:443>
     ServerAdmin webmaster@localhost
-    ServerName ${1}
+    ServerName $serverName
     $serverAlias
 
-    DocumentRoot ${2}
+    DocumentRoot $documentRoot
 
-    <Directory $DocumentRoot>
+    <Directory $documentRoot>
         Options -Indexes +FollowSymLinks +MultiViews
         AllowOverride All
         Require all granted
@@ -93,18 +93,18 @@ cat <<- _EOF_
         </FilesMatch>
     </Directory>
 
-    ErrorLog \${APACHE_LOG_DIR}/$ServerName-error.log
+    ErrorLog \${APACHE_LOG_DIR}/$serverName-error.log
 
     # Possible values include: debug, info, notice, warn, error, crit,
     # alert, emerg.
     LogLevel warn
 
-    CustomLog \${APACHE_LOG_DIR}/$ServerName-access.log combined
+    CustomLog \${APACHE_LOG_DIR}/$serverName-access.log combined
 
     SSLEngine on
 
-    SSLCertificateFile  $CertPath/$CertName.crt
-    SSLCertificateKeyFile $CertPath/$CertName.key
+    SSLCertificateFile  $certPath/$certName.crt
+    SSLCertificateKeyFile $certPath/$certName.key
 
     <FilesMatch "\.(cgi|shtml|phtml|php)$">
         SSLOptions +StdEnvVars
@@ -126,26 +126,24 @@ fi
 
 CertPath=""
 
+# Create some sensible variable names
+serverName = $1
+documentRoot = $2
+
 #Parse flags
-while getopts "d:s:a:p:c:h" OPTION; do
+while getopts "a:p:c:h" OPTION; do
     case $OPTION in
         h)
             show_usage
             ;;
-        d)
-            DocumentRoot=$OPTARG
-            ;;
-        s)
-            ServerName=$OPTARG
-            ;;
         a)
-            Alias=$OPTARG
+            alias=$OPTARG
             ;;
         p)
-            CertPath=$OPTARG
+            certPath=$OPTARG
             ;;
         c)
-            CertName=$OPTARG
+            certName=$OPTARG
             ;;
         *)
             show_usage
@@ -154,34 +152,34 @@ while getopts "d:s:a:p:c:h" OPTION; do
 done
 
 # If alias is set:
-if [ "$Alias" != "" ]; then
-    ServerAlias="ServerAlias "$Alias
+if [ "$alias" != "" ]; then
+    serverAlias="ServerAlias "$alias
 else
-    ServerAlias=""
+    serverAlias=""
 fi
 
 # If CertName doesn't get set, set it to ServerName
-if [ "$CertName" == "" ]; then
-    CertName=$1
+if [ "$certName" == "" ]; then
+     certName=$serverName
 fi
 
-if [ ! -d $DocumentRoot ]; then
-    mkdir -p $2
+if [ ! -d $documentRoot ]; then
+    mkdir -p $documentRoot
     #chown USER:USER $DocumentRoot #POSSIBLE IMPLEMENTATION, new flag -u ?
 fi
 
-if [ -f "${2}/${1}.conf" ]; then
+if [ -f "$documentRoot/$serverName.conf" ]; then
     echo 'vHost already exists. Aborting'
     show_usage
 else
-    create_vhost > /etc/apache2/sites-available/${1}.conf
+    create_vhost > /etc/apache2/sites-available/${serverName}.conf
 
     # Add :443 handling
-    if [ "$CertPath" != "" ]; then
-        create_ssl_vhost >> /etc/apache2/sites-available/${ServerName}.conf
-    fi
+#    if [ "$CertPath" != "" ]; then
+#        create_ssl_vhost >> /etc/apache2/sites-available/${serverName}.conf
+#    fi
 
     # Enable Site
-    cd /etc/apache2/sites-available/ && a2ensite ${1}.conf
+    cd /etc/apache2/sites-available/ && a2ensite $serverName.conf
     service apache2 reload
 fi
