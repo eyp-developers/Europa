@@ -73,9 +73,6 @@ end
   # Frameworks and Tooling
   ##########
 
-  # Provision Composer
-  #config.vm.provision "shell", path: "scripts/composer.sh", privileged: false, args: composer_packages.join(" ")
-
   # Provision Laravel
   # config.vm.provision "shell", path: "#{github_url}/scripts/laravel.sh", privileged: false, args: [server_ip, laravel_root_folder, public_folder, laravel_version]  # config.vm.provision "shell", path: "./local-script.sh"
 

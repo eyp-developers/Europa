@@ -8,7 +8,14 @@ class Europa
 
     github_url = "../Europa"
 
-# Server Configuration
+    # Server Configuration
+
+    composer_packages     = [        # List any global Composer packages that you want to install
+      "phpunit/phpunit:4.0.*",
+      #"codeception/codeception=*",
+      "phpspec/phpspec:2.0.*@dev",
+      #"squizlabs/php_codesniffer:1.5.*",
+    ]
 
     hostname        = "eyp.dev"
     public_folder   = "/vagrant"
@@ -176,7 +183,7 @@ class Europa
     settings["databases"].each do |db|
       config.vm.provision "shell" do |s|
         s.path = scriptDir + "/create-mysql.sh"
-        s.args = [db]
+        s.args = [db,mysql_user,mysql_root_password]
       end
 
 #      config.vm.provision "shell" do |s|
@@ -184,6 +191,8 @@ class Europa
 #        s.args = [db]
 #      end
     end
+
+    config.vm.provision "shell", path: "scripts/composer.sh", privileged: false, args: ["",composer_packages.join(" ")]
 
     # Configure All Of The Server Environment Variables
     if settings.has_key?("variables")
