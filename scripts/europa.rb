@@ -15,6 +15,21 @@ class Europa
       #"squizlabs/php_codesniffer:1.5.*",
     ]
 
+    ruby_version          = "latest" # Choose what ruby version should be installed (will also be the default version)
+    ruby_gems             = [        # List any Ruby Gems that you want to install
+    #  "jekyll",
+      "sass",
+      "compass",
+    ]
+
+    nodejs_version        = "latest"   # By default "latest" will equal the latest stable version
+    nodejs_packages       = [          # List any global NodeJS packages that you want to install
+      "grunt-cli",
+      "gulp",
+      "bower",
+    #  "yo",
+    ]
+
     hostname        = "eyp.dev"
     public_folder   = "/vagrant"
 
@@ -211,6 +226,16 @@ class Europa
         s.inline = "service php5-fpm restart"
       end
     end
+
+    ####
+    # Additional Languages
+    ##########
+
+    # Install Nodejs
+    config.vm.provision "shell", path: "scripts/nodejs.sh", privileged: false, args: nodejs_packages.unshift(nodejs_version, github_url)
+
+    # Install Ruby Version Manager (RVM)
+    config.vm.provision "shell", path: "scripts/rvm.sh", privileged: false, args: ruby_gems.unshift(ruby_version)
 
     # Update Composer On Every Provision
     config.vm.provision "shell" do |s|
