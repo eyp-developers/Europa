@@ -48,7 +48,7 @@ if [ $4 == "true" ]; then
 
 fi
 
-Q1="update mysql.user set user=$1 where user='root';"
+Q1="update mysql.user set user='$1' where user='root';"
 Q2="FLUSH PRIVILEGES;"
 SQL="${Q1}${Q2}"
 

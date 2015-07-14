@@ -3,12 +3,10 @@ class Europa
     # Set The VM Provider
     ENV['VAGRANT_DEFAULT_PROVIDER'] = settings["provider"] ||= "virtualbox"
 
-    # Configure Local Variable To Access Scripts From Remote Location
+    # Variables
+
     scriptDir = File.dirname(__FILE__)
-
     github_url = "../Europa"
-
-    # Server Configuration
 
     composer_packages     = [        # List any global Composer packages that you want to install
       "phpunit/phpunit:4.0.*",
@@ -19,6 +17,21 @@ class Europa
 
     hostname        = "eyp.dev"
     public_folder   = "/vagrant"
+
+    server_swap = settings["swap"] ||= 1024
+    server_timezone = settings["timezone"] ||= 'UTC'
+
+    php_timezone = server_timezone
+    hhvm = settings["hhvm"] ||= "false"
+    php_version = settings["php_version"] ||= "5.6"
+
+    server_ip = settings["ip"] ||= "192.168.10.10"
+
+    mysql_user = settings["db_user"] ||= 'europa'
+    mysql_root_password = settings["db_password"] ||= 'secret'
+    mysql_version = '5.6'
+    mysql_enable_remote = 'true'
+
 
     # Prevent TTY Errors
     config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
@@ -55,28 +68,20 @@ class Europa
     ########
 
     # Provision Base Packages
-    server_swap = settings["swap"] ||= 1024
-    server_timezone = settings["timezone"] ||= 'UTC'
     config.vm.provision "shell", path: "scripts/base.sh", args: [server_swap, server_timezone]
 
     # optimize base box
     config.vm.provision "shell", path: "scripts/base_box_optimizations.sh", privileged: true
 
     # Provision PHP
-    php_timezone = server_timezone
-    hhvm = settings["hhvm"] ||= "false"
-    php_version = settings["php_version"] ||= "5.6"
     config.vm.provision "shell", path: "scripts/php.sh", args: [php_timezone, hhvm, php_version]
 
     # Provision Vim
-    config.vm.provision "shell", path: "scripts/vim.sh"
+    # config.vm.provision "shell", path: "scripts/vim.sh"
 
     ####
     # Web server
     ########
-
-    server_ip = settings["ip"] ||= "192.168.10.10"
-
     if (settings['nginx'] == 'true')
       # Provision Nginx Base
       config.vm.provision "shell", path: "scripts/nginx.sh", args: [server_ip, public_folder, hostname]
@@ -88,12 +93,6 @@ class Europa
     ####
     # MySQL
     ########
-
-    mysql_user = settings["db_user"] ||= 'europa'
-    mysql_root_password = settings["db_password"] ||= 'secret'
-    mysql_version = '5.6'
-    mysql_enable_remote = 'true'
-
     config.vm.provision "shell", path: "scripts/mysql.sh", args: [mysql_user, mysql_root_password, mysql_version, mysql_enable_remote]
 
 
