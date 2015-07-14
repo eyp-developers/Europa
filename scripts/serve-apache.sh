@@ -127,8 +127,8 @@ fi
 CertPath=""
 
 # Create some sensible variable names
-serverName = $1
-documentRoot = $2
+serverName=$1
+documentRoot=$2
 
 #Parse flags
 while getopts "a:p:c:h" OPTION; do
