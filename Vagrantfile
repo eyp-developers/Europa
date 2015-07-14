@@ -34,13 +34,6 @@ end
 #  "compass",
 # ]
 
-# composer_packages     = [        # List any global Composer packages that you want to install
-#  "phpunit/phpunit:4.0.*",
-  #"codeception/codeception=*",
-#  "phpspec/phpspec:2.0.*@dev",
-  #"squizlabs/php_codesniffer:1.5.*",
-# ]
-
 # nodejs_version        = "latest"   # By default "latest" will equal the latest stable version
 # nodejs_packages       = [          # List any global NodeJS packages that you want to install
 #  "grunt-cli",
